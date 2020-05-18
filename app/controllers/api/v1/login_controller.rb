@@ -14,13 +14,14 @@ module Api
 
         user = User.where(email: email).first
         response = JsonResponse.new(:user, user)
-        if user.valid_password?(password)
+
+        if !user || !user.valid_password?(password)
+          response.message = i18n_message(:wrong_pass)
+          response.status_code = 400
+        elsif user.valid_password?(password)
           bypass_sign_in(user)
           response.message = i18n_message(:success)
           response.content[:user] = user.to_json
-        else
-          response.message = i18n_message(:wrong_pass)
-          response.status_code = 400
         end
 
         render
