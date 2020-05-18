@@ -24,7 +24,7 @@ module Api
           response.content[:user] = user.to_json
         end
 
-        render
+        render response
       end
 
       _required_params({
@@ -37,15 +37,15 @@ module Api
 
         if user.save
           bypass_sign_in(user)
-          @response = JsonResponse.new(:user, user)
-          @response.message = i18n_message(:success)
+          response = JsonResponse.new(:user, user)
+          response.message = i18n_message(:success)
         else
-          @response = JsonResponse.new(:user, user)
-          @response.message = i18n_message(:user_dup)
-          @response.status_code = 400
+          response = JsonResponse.new(:user, user)
+          response.message = i18n_message(:user_dup)
+          response.status_code = 400
         end
 
-        render
+        render response
       end
     end
   end

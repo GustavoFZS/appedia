@@ -67,7 +67,7 @@ class ApplicationController < ActionController::API
     @response = ArrayResponse.new(name, page, items_per_page, order, order_by)
   end
 
-  def render
-    super @response.to_render
+  def render(response = @response)
+    super response.to_render
   end
 end
