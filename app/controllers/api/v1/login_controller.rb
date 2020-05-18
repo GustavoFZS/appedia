@@ -11,9 +11,9 @@ module Api
       def signin
         email = @params[:email]
         password = @params[:password]
-        response = JsonResponse.new
 
         user = User.where(email: email).first
+        response = JsonResponse.new(:user, user)
         if user.valid_password?(password)
           bypass_sign_in(user)
           response.message = i18n_message(:success)
@@ -32,14 +32,7 @@ module Api
                          password: I18n.t('docs.user.password')
                        })
       def signup
-        name = params[:name]
-        email = params[:email]
-        password = params[:password]
-        user = User.new
-
-        user.name = name
-        user.email = email
-        user.password = password
+        user = User.new(@params)
 
         if user.save
           bypass_sign_in(user)
