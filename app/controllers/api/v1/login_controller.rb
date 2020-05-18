@@ -24,7 +24,7 @@ module Api
           response.status_code = 400
         end
 
-        render response.to_render
+        render
       end
 
       _required_params({
@@ -37,22 +37,22 @@ module Api
         email = params[:email]
         password = params[:password]
         user = User.new
-        response = JsonResponse.new
 
         user.name = name
         user.email = email
         user.password = password
 
         if user.save
-          response.message = i18n_message(:success)
-          response.content[:user] = user.to_json
+          bypass_sign_in(user)
+          @response = JsonResponse.new(:user, user)
+          @response.message = i18n_message(:success)
         else
-          response.message = i18n_message(:user_dup)
-          response.content[:user] = user.errors
-          response.status_code = 400
+          @response = JsonResponse.new(:user, user)
+          @response.message = i18n_message(:user_dup)
+          @response.status_code = 400
         end
 
-        render response.to_render
+        render
       end
     end
   end

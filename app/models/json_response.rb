@@ -1,21 +1,18 @@
 # frozen_string_literal: true
 
-class JsonResponse
-  attr_accessor :status_code
+class JsonResponse < Response
+  attr_accessor :model
   attr_accessor :message
   attr_accessor :content
+  attr_accessor :status_code
 
-  def initialize(message = '', content = {}, status_code = 200)
-    @status_code = status_code
-    @message = message
+  def initialize(model, content)
+    @model = model
+    @status_code = content.nil? ? 404 : 200
     @content = content
   end
 
-  def success?
-    @status_code >= 200 && @status_code < 300
-  end
-
   def to_render
-    { json: { success: success?, message: @message, content: @content }, status: @status_code }
+    { json: { success: success?, message: @message, content: Response.json_map(model, content) }, status: @status_code }
   end
 end

@@ -5,11 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :tags
-
-  def to_json
-    {
-      name: name,
-      email: email
-    }
-  end
+  has_many :things
 end

@@ -2,32 +2,46 @@
 
 module Api
   module V1
-    class TagsController < ApplicationController
+    class ThingsController < ApplicationController
       _optional_params(
         {
-          title: I18n.t('docs.tag.title'),
-          order_by: I18n.t('docs.tag.order_by'),
+          content_type: I18n.t('docs.thing.content_type'),
+          tag_ids: I18n.t('docs.thing.tag_ids'),
+          order_by: I18n.t('docs.paginate.order_by'),
           order: I18n.t('docs.paginate.order'),
           page: I18n.t('docs.paginate.page'),
           items_per_page: I18n.t('docs.paginate.items_per_page')
         }
       )
       def list
-        @query = if @params[:title]
-                   user_tags.where('title like ?', "%#{@params[:title]}%")
-                 else
-                   user_tags.all
-                 end
+        content_type = @params[:content_type]
+        tag_ids = @params[:tag_ids]
+        @query = user_things
+        additional_info = {}
+
+        tags = if tag_ids.nil? || tag_ids.empty?
+                 []
+               else
+                 user_tags.where(id: tag_ids).map(&:id)
+               end
+
+        tags.each do |tag|
+          @query = @query.where('raw_tags like ?', "%#{tag}%")
+        end
+
+        @query = @query.where('content_type = ?', content_type) if content_type
+        tags_join = @query.joins(:tags).select('tags.title, tags.id').where('tags.id not in (?)', tag_ids)
+        additional_info[:related_tags] = tags_join.map { |u| { title: u.title, id: u.id } }
 
         @response.set_query(@query)
-        @query.update_all(last_search: DateTime.now)
+        @response.additional_info = additional_info
 
         render
       end
 
       _required_params(
         {
-          id: I18n.t('docs.tag.id')
+          id: I18n.t('docs.thing.id')
         }
       )
       def show
@@ -42,8 +56,11 @@ module Api
 
       _required_params(
         {
-          id: I18n.t('docs.tag.id'),
-          title: I18n.t('docs.tag.title')
+          id: I18n.t('docs.thing.id'),
+          title: I18n.t('docs.thing.title'),
+          content: I18n.t('docs.thing.content'),
+          tag_ids: I18n.t('docs.thing.tag_ids'),
+          content_type: I18n.t('docs.thing.content_type')
         }
       )
       def update
@@ -61,13 +78,16 @@ module Api
 
       _required_params(
         {
-          title: I18n.t('docs.tag.title')
+          title: I18n.t('docs.thing.title'),
+          content: I18n.t('docs.thing.content'),
+          tag_ids: I18n.t('docs.thing.tag_ids'),
+          content_type: I18n.t('docs.thing.content_type')
         }
       )
       def create
         @model.user = current_user
 
-        if @model.save && current_user.save
+        if @model.save
           @response.message = i18n_message(:success)
         else
           @response.message = i18n_message(:error)
@@ -79,7 +99,7 @@ module Api
 
       _required_params(
         {
-          id: I18n.t('docs.tag.id')
+          id: I18n.t('docs.thing.id')
         }
       )
       def delete
@@ -96,7 +116,7 @@ module Api
       end
 
       def i18n_message(path, method = action_name)
-        I18n.t "api.#{method}.#{path}", model: 'Tag', gender: 'a'
+        I18n.t "api.#{method}.#{path}", model: 'Coisa', gender: 'a'
       end
     end
   end

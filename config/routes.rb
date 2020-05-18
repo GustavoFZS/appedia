@@ -13,6 +13,12 @@ Rails.application.routes.draw do
       get 'tags/:id', to: 'tags#show'
       put 'tags/:id', to: 'tags#update'
       delete 'tags/:id', to: 'tags#delete'
+
+      get 'things', to: 'things#list'
+      post 'things', to: 'things#create'
+      get 'things/:id', to: 'things#show'
+      put 'things/:id', to: 'things#update'
+      delete 'things/:id', to: 'things#delete'
     end
   end
 end

@@ -1,43 +1,51 @@
 pt:
   api:
     missing_params: 'Parametros obrigatórios não encontrados: %{params}'
+    list:
+      success: '%{model}s encontrad%{gender}s com sucesso'
+      error: 'Falha ao buscar %{model}s'
+      not_found: '%{model}s não encontrad%{gender}'
+    show:
+      success: '%{model} encontad%{gender} com sucesso'
+      error: 'Falha ao buscar %{model}'
+      not_found: '%{model} não encontrad%{gender}'
+    update:
+      success: '%{model} atualizad%{gender} com sucesso'
+      error: 'Falha ao atualizar %{model}'
+      not_found: '%{model} não encontrad%{gender}'
+    create:
+      success: '%{model} criad%{gender} com sucesso'
+      error: 'Falha ao criar %{model}'
+      not_found: '%{model} não encontrad%{gender}'
+    delete:
+      success: '%{model} deletad%{gender} com sucesso'
+      error: 'Falha ao deletar %{model}'
+      not_found: '%{model} não encontrad%{gender}'
     v1:
       login:
         signin:
           success: 'Usuário logado'
           wrong_pass: 'Credenciais inválidas'
         signup:
+          success: 'Usuário cadastrado com sucesso'          
           user_dup: 'Usuário já cadastrado'
-      tags:
-        list:
-          success: 'Tags encontradas com sucesso'
-          error: 'Falha ao buscar Tags'
-          not_found: 'Tag não encontrada'
-        show:
-          success: 'Tag encontada com sucesso'
-          error: 'Falha ao buscar Tag'
-          not_found: 'Tag não encontrada'
-        update:
-          success: 'Tag atualizada com sucesso'
-          error: 'Falha ao atualizar Tag'
-          not_found: 'Tag não encontrada'
-        create:
-          success: 'Tag criada com sucesso'
-          error: 'Falha ao criar Tag'
-          not_found: 'Tag não encontrada'
-        delete:
-          success: 'Tag deletada com sucesso'
-          error: 'Falha ao deletar Tag'
-          not_found: 'Tag não encontrada'
   docs:
+    paginate:
+      order_by: 'String|created_at|Parametro de ordenação|created_at (Data de criação)'
+      order: 'String|desc|Direção da ordenação|desc/asc'
+      page: 'Integer|0|Página|A paginação começa no 0'
+      items_per_page: 'Integer|10|Itens por página|'
     user:
       name: 'String||Email do usuário|'
       email: 'String||Email do usuário|'
       password: 'String||Senha do app|Composta por 6 digitos'
     tag:
-      id: 'Integer||Titulo da tag|'
-      title: 'String||Novo titulo|'
-      order_by: 'String|created_at|Parametro de ordenação| created_at (Data de criação) / last_search (Data da última pesquisa)'
-      order: 'String|desc|Direção da ordenação| desc ou asc'
-      page: 'Integer|0|Página|A paginação começa no 0'
-      items_per_page: 'Integer|10|Itens por página|'
+      id: 'Integer||ID da tag|'
+      title: 'String||Título da tag|'
+      order_by: 'String|created_at|Parametro de ordenação|created_at (Data de criação) / last_search (Data da última pesquisa)'
+    thing:
+      id: 'Integer||ID da coisa|'
+      title: 'String||Título da coisa|'
+      content: 'String||Conteúdo|'
+      tag_ids: 'Array||Ids das tags relacionadas|'
+      content_type: 'String|text|Formato do conteúdo|text/video/url/image'
