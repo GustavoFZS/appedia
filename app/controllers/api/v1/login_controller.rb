@@ -21,7 +21,6 @@ module Api
         elsif user.valid_password?(password)
           bypass_sign_in(user)
           response.message = i18n_message(:success)
-          response.content[:user] = user.to_json
         end
 
         render response
