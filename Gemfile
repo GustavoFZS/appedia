@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.1'
 
-gem 'api_annotation'
+gem 'api_annotation', git: 'https://github.com/GustavoFZS/api_annotation.git'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
