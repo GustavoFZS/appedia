@@ -12,8 +12,7 @@ module Api
         email = @params[:email]
         password = @params[:password]
         response = JsonResponse.new
-        tg = Tag.new
-        tg.save
+
         user = User.where(email: email).first
         if user.valid_password?(password)
           bypass_sign_in(user)
