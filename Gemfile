@@ -8,7 +8,7 @@ gem 'api_docs'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 
 group :development, :test do
