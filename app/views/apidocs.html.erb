@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <% @map_annotations.each do |controller| %>
+      <% if controller[0].include?('controller') %>
+        <h2><%= controller[0].gsub('controller', '') %></h2>
+        <% controller[1].each do |methods| %>
+          <h3><%= methods[0] %></h3>
+          <h5>Parametros obrigatorios:</h5>
+          <% if methods[1][:_required_params] && methods[1][:_required_params].each do |param| %>
+            <table style="width:100%">
+              <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Default</th>
+                <th>Descricao</th>
+                <th>Comentario</th>
+              </tr>
+            </table>
+          <% end %>
+          <h5>Parametros opcionais:</h5>
+          <% if methods[1][:_optional_params] && methods[1][:_optional_params].each do |param| %>
+            <table style="width:100%">
+              <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Default</th>
+                <th>Descricao</th>
+                <th>Comentario</th>
+              </tr>
+            </table>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </body>
+</html>
