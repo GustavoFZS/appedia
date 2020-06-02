@@ -18,11 +18,10 @@ class ApplicationController < ActionController::API
     missing_params = annotation_result[:missing_params]
 
     unless missing_params.empty?
-      response = JsonResponse.new
+      response = JsonPresenter.new(nil)
       response.message = I18n.t('api.missing_params', params: missing_params.join(', '))
-      response.content[:missing_params] = missing_params
       response.status_code = 400
-      render response.to_render
+      render(response)
       return
     end
 
@@ -46,28 +45,33 @@ class ApplicationController < ActionController::API
   end
 
   def find_object
-    name = controller_name.singularize
-    @model = name.capitalize.constantize.where(id: @params[:id]).first
-    @response = JsonResponse.new(name.to_sym, @model)
+    @model = formatted_controller_name.constantize.where(id: @params[:id]).first
+    @response = presenter_name.new(@model)
   end
 
   def create_object
-    name = controller_name.singularize
-    @model = name.capitalize.constantize.new(@params)
-    @response = JsonResponse.new(name.to_sym, @model)
+    @model = formatted_controller_name.constantize.new(@params)
+    @response = presenter_name.new(@model)
   end
 
   def list_objects
-    name = controller_name.singularize
     page = @params[:page]
     order = @params[:order]
     order_by = @params[:order_by]
     items_per_page = @params[:items_per_page]
 
-    @response = ArrayResponse.new(name, page, items_per_page, order, order_by)
+    @response = ArrayPresenter.new(presenter_name, page, items_per_page, order, order_by)
+  end
+
+  def formatted_controller_name
+    controller_name.singularize.capitalize
+  end
+
+  def presenter_name
+    "#{formatted_controller_name}Presenter".constantize
   end
 
   def render(response = @response)
-    super response.to_render
+    super response.as_json
   end
 end

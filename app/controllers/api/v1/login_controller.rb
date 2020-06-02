@@ -13,7 +13,7 @@ module Api
         password = @params[:password]
 
         user = User.where(email: email).first
-        response = JsonResponse.new(:user, user)
+        response = UserPresenter.new(user)
 
         if !user || !user.valid_password?(password)
           response.message = i18n_message(:wrong_pass)
@@ -36,10 +36,10 @@ module Api
 
         if user.save
           bypass_sign_in(user)
-          response = JsonResponse.new(:user, user)
+          response = UserPresenter.new(user)
           response.message = i18n_message(:success)
         else
-          response = JsonResponse.new(:user, user)
+          response = UserPresenter.new(user)
           response.message = i18n_message(:user_dup)
           response.status_code = 400
         end

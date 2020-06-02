@@ -20,7 +20,7 @@ module Api
                  end
 
         @response.set_query(@query)
-        @query.update_all(last_search: DateTime.now)
+        @query.update_all(last_search: DateTime.now) if @params[:title]
 
         render
       end

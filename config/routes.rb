@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount ApiDocs::Engine => '/apidocs'
+  # get 'api_docs' => '/api_docs/apidocs#index'
+
   devise_for :users
   namespace 'api' do
     get 'docs'
