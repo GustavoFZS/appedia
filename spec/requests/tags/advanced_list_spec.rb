@@ -16,7 +16,7 @@ describe 'list tags in order route', type: :request do
     expect(response.status).to eq(200)
     title = JSON.parse(response.body)['items'][9]['title']
 
-    get "/api/v1/tags?title=#{title}"
+    get "/api/v1/tags?title=#{URI.encode(title)}"
     expect(response.status).to eq(200)
     expect(JSON.parse(response.body)['items'][0]['title']).to eq(title)
 

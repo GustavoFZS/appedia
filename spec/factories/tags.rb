@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :tag do
-    title { Faker::Name.name_with_middle }
+    title { Faker::Name.name }
     user
   end
 end

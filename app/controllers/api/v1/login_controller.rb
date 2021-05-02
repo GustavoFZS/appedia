@@ -31,6 +31,8 @@ module Api
                          email: I18n.t('docs.user.email'),
                          password: I18n.t('docs.user.password')
                        })
+      _request(:user)
+      _desc('Abre uma sessão para o usuário.')
       def signup
         user = User.new(@params)
 

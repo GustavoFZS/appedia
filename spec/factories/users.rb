@@ -7,7 +7,6 @@ FactoryBot.define do
     password { '123456' }
 
     factory :user_with_tags do
-
       transient do
         tags_count { 5 }
       end
@@ -18,7 +17,6 @@ FactoryBot.define do
     end
 
     factory :user_with_things do
-
       transient do
         things_count { 5 }
       end

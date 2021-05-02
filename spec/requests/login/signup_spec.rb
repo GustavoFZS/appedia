@@ -14,4 +14,16 @@ describe 'signup route', type: :request do
   it 'returns status code 200' do
     expect(response).to have_http_status(:success)
   end
+
+  it 'check format' do
+    expected = {
+      success: true,
+      message: 'Usuário cadastrado com sucesso',
+      content: {
+        name: 'teste',
+        email: 'teste@gmail.com'
+      }
+    }
+    response_match(response, expected)
+  end
 end

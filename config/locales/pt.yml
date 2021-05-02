@@ -1,4 +1,10 @@
 pt:
+  date:
+    formats:
+      default: "%d/%m/%Y"
+  time:
+    formats:
+      default: "%d/%m/%Y %H:%M"
   api:
     missing_params: 'Parametros obrigatórios não encontrados: %{params}'
     list:

@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::API
   extend ApiAnnotation::General
   api_annotations!
+  create_tag(:_request)
+  create_tag(:_desc)
 
   before_action :permit_params
   before_action :check_params
