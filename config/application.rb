@@ -37,5 +37,7 @@ module Appedia
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # config.hosts << '74163984d106.ngrok.io'
   end
 end

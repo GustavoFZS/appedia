@@ -3,7 +3,7 @@ class FormatHelper
     {
       success: success,
       message: message,
-      content: content
+      result: content
     }
   end
 end

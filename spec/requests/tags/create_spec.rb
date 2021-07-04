@@ -5,10 +5,7 @@ require 'rails_helper'
 describe 'create tag route', type: :request do
   before(:each) do
     user = FactoryBot.create(:user)
-    post '/api/v1/login/signin', params: {
-      password: user.password,
-      email: user.email
-    }
+    auth(user)
   end
 
   before do
@@ -23,18 +20,18 @@ describe 'create tag route', type: :request do
   end
 
   it 'validate title' do
-    expect(@response['content']['title']).to eq('titulo teste')
+    expect(@response['result']['title']).to eq('titulo teste')
   end
 
   it 'check format' do
     expected = {
       success: true,
       message: 'Tag criada com sucesso',
-      content: {
-        id: @response['content']['id'],
+      result: {
+        id: @response['result']['id'],
         title: 'titulo teste',
-        created_at: @response['content']['created_at'],
-        things_count: @response['content']['things_count']
+        created_at: @response['result']['created_at'],
+        things_count: @response['result']['things_count']
       }
     }
     response_match(response, expected)

@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class ThingsController < ApplicationController
+    class ThingsController < ApiController
       _optional_params(
         {
           content_type: I18n.t('docs.thing.content_type'),
@@ -56,7 +56,11 @@ module Api
 
       _required_params(
         {
-          id: I18n.t('docs.thing.id'),
+          id: I18n.t('docs.thing.id')
+        }
+      )
+      _optional_params(
+        {
           title: I18n.t('docs.thing.title'),
           content: I18n.t('docs.thing.content'),
           tag_ids: I18n.t('docs.thing.tag_ids'),
@@ -80,7 +84,7 @@ module Api
         {
           title: I18n.t('docs.thing.title'),
           content: I18n.t('docs.thing.content'),
-          tag_ids: I18n.t('docs.thing.tag_ids'),
+          # tag_ids: I18n.t('docs.thing.tag_ids'),
           content_type: I18n.t('docs.thing.content_type')
         }
       )

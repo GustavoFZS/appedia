@@ -92,6 +92,14 @@ RSpec.configure do |config|
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
 
+  def auth(user)
+    post '/api/v1/login/signin', params: {
+      password: user.password,
+      email: user.email
+    }
+    @authorization = response.header['access_token']
+  end
+
   def hash_to_json(hash)
     JSON.parse(hash.to_json)
   end

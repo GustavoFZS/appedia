@@ -8,11 +8,7 @@ describe 'create things route', type: :request do
     user = FactoryBot.create(:user)
     user_tags = FactoryBot.create(:user_with_tags, tags_count: 1)
     @tag_id = user_tags.tags.first.id
-
-    post '/api/v1/login/signin', params: {
-      password: user.password,
-      email: user.email
-    }
+    auth(user)
   end
 
   before do
@@ -31,6 +27,6 @@ describe 'create things route', type: :request do
   end
 
   it 'validate title' do
-    expect(JSON.parse(response.body)['content']['title']).to eq('Imagem teste')
+    expect(JSON.parse(response.body)['result']['title']).to eq('Imagem teste')
   end
 end

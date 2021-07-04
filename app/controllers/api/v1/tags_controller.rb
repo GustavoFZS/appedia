@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class TagsController < ApplicationController
+    class TagsController < ApiController
       _optional_params(
         {
           title: I18n.t('docs.tag.title'),

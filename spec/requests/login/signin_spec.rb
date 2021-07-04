@@ -22,7 +22,7 @@ describe 'signin route', type: :request do
     expected = {
       success: true,
       message: 'Usuário logado',
-      content: {
+      result: {
         name: @user.name,
         email: @user.email
       }

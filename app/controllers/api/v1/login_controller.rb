@@ -2,8 +2,7 @@
 
 module Api
   module V1
-    class LoginController < ApplicationController
-
+    class LoginController < ApiController
       _required_params({
                          email: I18n.t('docs.user.email'),
                          password: I18n.t('docs.user.password')
@@ -19,7 +18,7 @@ module Api
           response.message = i18n_message(:wrong_pass)
           response.status_code = 400
         elsif user.valid_password?(password)
-          bypass_sign_in(user)
+          add_headers(user)
           response.message = i18n_message(:success)
         end
 
@@ -32,21 +31,25 @@ module Api
                          password: I18n.t('docs.user.password')
                        })
       _request(:user)
-      _desc('Abre uma sessão para o usuário.')
+      _desc('Cria e loga o usuário.')
       def signup
         user = User.new(@params)
 
+        response = UserPresenter.new(user)
         if user.save
-          bypass_sign_in(user)
-          response = UserPresenter.new(user)
+          add_headers(user)
           response.message = i18n_message(:success)
         else
-          response = UserPresenter.new(user)
           response.message = i18n_message(:user_dup)
           response.status_code = 400
         end
 
         render response
+      end
+
+      def add_headers(user)
+        headers['access_token'] = JsonWebToken.encode(user_id: user.id)
+        headers['expires_in'] = JsonWebToken.expires_in
       end
     end
   end

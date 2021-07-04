@@ -6,10 +6,7 @@ describe 'delete thing route', type: :request do
 
   before(:each) do
     user = FactoryBot.create(:user_with_things, things_count: 1)
-    post '/api/v1/login/signin', params: {
-      password: user.password,
-      email: user.email
-    }
+    auth(user)
     @thing_id = user.things.first.id
   end
 

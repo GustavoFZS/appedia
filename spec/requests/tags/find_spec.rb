@@ -5,10 +5,7 @@ require 'rails_helper'
 describe 'find tag route', type: :request do
   before(:each) do
     user = FactoryBot.create(:user_with_tags, tags_count: 1)
-    post '/api/v1/login/signin', params: {
-      password: user.password,
-      email: user.email
-    }
+    auth(user)
     @tag = user.tags.first
   end
 

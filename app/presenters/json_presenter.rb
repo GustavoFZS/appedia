@@ -8,7 +8,7 @@ class JsonPresenter < ApiPresenter
       json: {
         success: success?,
         message: @message,
-        content: content
+        result: content
       },
       status: @status_code
     }

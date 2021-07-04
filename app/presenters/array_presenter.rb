@@ -1,14 +1,7 @@
 # frozen_string_literal: true
 
 class ArrayPresenter
-  attr_accessor :page
-  attr_accessor :order
-  attr_accessor :query
-  attr_accessor :order_by
-  attr_accessor :presenter
-  attr_accessor :query_count
-  attr_accessor :items_per_page
-  attr_accessor :additional_info
+  attr_accessor :page, :order, :query, :order_by, :presenter, :query_count, :items_per_page, :additional_info
 
   def initialize(presenter, page, items_per_page, order, order_by)
     @presenter = presenter
@@ -22,7 +15,7 @@ class ArrayPresenter
     page + 1 if page < total_pages
   end
 
-  def content
+  def items
     content = []
 
     query.each do |item|
@@ -49,7 +42,7 @@ class ArrayPresenter
         current_page: page,
         items_per_page: items_per_page,
         next_page: next_page,
-        items: content,
+        result: items,
         additional_info: additional_info
       }
     }

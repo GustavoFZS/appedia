@@ -19,7 +19,7 @@ describe 'signup route', type: :request do
     expected = {
       success: true,
       message: 'Usuário cadastrado com sucesso',
-      content: {
+      result: {
         name: 'teste',
         email: 'teste@gmail.com'
       }

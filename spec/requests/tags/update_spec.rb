@@ -7,11 +7,7 @@ describe 'update tag route', type: :request do
   before(:each) do
     user = FactoryBot.create(:user_with_tags, tags_count: 1)
     @tag = user.tags.first
-
-    post '/api/v1/login/signin', params: {
-      password: user.password,
-      email: user.email
-    }
+    auth(user)
   end
 
   before do
@@ -26,7 +22,7 @@ describe 'update tag route', type: :request do
   end
 
   it 'validate title' do
-    expect(JSON.parse(response.body)['content']['title']).to eq(@tag.title)
+    expect(JSON.parse(response.body)['result']['title']).to eq(@tag.title)
   end
 
   it 'check format' do

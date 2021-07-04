@@ -60,4 +60,30 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  module RequestExtensions
+    def get(path)
+      super path, headers: auth_key
+    end
+
+    def post(path, params)
+      params[:headers] = auth_key
+      super path, params
+    end
+
+    def delete(path)
+      super path, headers: auth_key
+    end
+
+    def put(path, params)
+      params[:headers] = auth_key
+      super path, params
+    end
+
+    def auth_key
+      { 'Authorization': @authorization }
+    end
+  end
+
+  config.include RequestExtensions, type: :request
 end
