@@ -10,8 +10,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise'
 gem 'jwt'
 gem 'mysql2', '>= 0.4.4', '< 0.6.0'
-gem 'puma', '~> 3.11'
-gem 'rails', '6.1.2.1'
+gem 'puma', '>= 4.3.8'
+gem 'rails', '6.1.4'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

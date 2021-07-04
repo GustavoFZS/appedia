@@ -3,4 +3,7 @@ class User < ApplicationRecord
 
   has_many :tags
   has_many :things
+
+  validates :name, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
 end
